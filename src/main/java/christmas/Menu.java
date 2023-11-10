@@ -18,6 +18,7 @@ public enum Menu {
 	private int price;
 	private String koreanName;
 	
+
 	private Menu(String koreanName,String typeMenu, int price) {
 		this.koreanName = koreanName;
 		this.typeMenu = typeMenu;
@@ -30,7 +31,7 @@ public enum Menu {
                 return menu;
             }
         }
-        return null;
+        throw new IllegalArgumentException("[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요");
     }
 	
 	public String getTypeMenu() {
@@ -39,5 +40,8 @@ public enum Menu {
 	
 	public int getPrice() {
 		return price;
+	}
+	public String getKoreanName() {
+		return koreanName;
 	}
 }
