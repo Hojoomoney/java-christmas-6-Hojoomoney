@@ -98,4 +98,10 @@ public class OutputView {
 		System.out.println("<할인 후 예상 결제 금액>");
 		System.out.println(df.format(totalAfterDiscount));
 	}
+	//이벤트 배지 출력 기능
+	public void printEventBadge(String eventBadge) {
+		System.out.println();
+		System.out.println("<12월 이벤트 배지>");
+		System.out.println(eventBadge);
+	}
 }

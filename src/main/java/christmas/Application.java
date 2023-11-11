@@ -27,6 +27,8 @@ public class Application {
     	outputView.printTotalSaleAmount(totalSaleAmount);
     	int totalAfterDiscount = calculateTotalPriceAfterDiscount(totalBeforeDiscount, christmasDaySaleAmount, dayOfWeekSaleAmount, specialDaySaleAmount);
     	outputView.printTotalAfterDiscount(totalAfterDiscount);
+    	String eventBadge = checkEventBadge(totalSaleAmount);
+    	outputView.printEventBadge(eventBadge);
     }
     //할인 전 총주문 금액 계산 메소드
     private static int calculateTotalPriceBeforeDiscount(Map<Menu, Integer> menu) {
@@ -122,5 +124,19 @@ public class Application {
     							+ dayOfWeekSaleAmount 
     							+ specialDaySaleAmount;
     	return totalAfterDiscount;
+    }
+    //이벤트 배지 부여 확인 메소드
+    private static String checkEventBadge(int totalSaleAmount) {
+    	String eventBadge = "없음";
+    	if(totalSaleAmount >= 5000) {
+    		eventBadge = "별";
+    	}
+    	if(totalSaleAmount >= 10000) {
+    		eventBadge = "트리";
+    	}
+    	if(totalSaleAmount >= 20000) {
+    		eventBadge = "산타";
+    	}
+    	return eventBadge;
     }
 }
