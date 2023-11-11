@@ -23,10 +23,11 @@ public class CheckValidate {
 	public Map<Menu, Integer> checkValidMenu() {
 		boolean	validOrder = false;
     	while (!validOrder) {
-    		Map<String, String> menuItems = inputView.readMenu();
+    		String[] menu = inputView.readMenu();
+    		Map<String, String> menuItems = convertToMap(menu);
     		Map<String, Integer> menuParseInt = checkValidQuantity(menuItems);
     		validMenu = checkValidNameFromMenu(menuParseInt);
-    		validOrder = validMenu.size() == menuItems.size();
+    		validOrder = validMenu.size() == menu.length;
     	}
     	return validMenu;
 	}
@@ -50,14 +51,48 @@ public class CheckValidate {
 		for (Map.Entry<String, String> entry : menuItems.entrySet()) {
 			try {
 				int quantity = Integer.parseInt(entry.getValue());
+				checkMoreThan1(quantity);
 				menuParseInt.put(entry.getKey(), quantity);
 			} catch(NumberFormatException e) {
 				System.out.println(ERROR_MSG);
+				menuParseInt.clear();
+				break;
+			} catch(IllegalArgumentException e) {
+				System.out.println(e.getMessage());
 				menuParseInt.clear();
 				break;
 			}
 		}
 		return menuParseInt;
 	}
-	
+	//입력받은 메뉴를 Map으로 변환시켜주는 메소드
+	private Map<String, String> convertToMap(String[] menu) {
+		Map<String, String> menuItems = new LinkedHashMap<>();
+		for (String menuItem : menu) {
+			String[] parts = menuItem.split("-");
+			String menuName = parts[0].trim();
+			String quantity = parts[1].trim();
+			try {
+				checkDuplicateMenu(menuItems, menuName);
+			} catch (IllegalArgumentException e) {
+				System.out.println(e.getMessage());
+				menuItems.clear();
+				break;
+			}
+			menuItems.put(menuName, quantity);
+		}
+		return menuItems;
+	}
+	//중복된 메뉴 확인 메소드
+	private void checkDuplicateMenu(Map<String, String> menuItems, String menuName) {
+		if (menuItems.containsKey(menuName)) {
+			throw new IllegalArgumentException(ERROR_MSG);
+		}
+	}
+	//메뉴의 개수가 1 이상인지 확인하는 메소드
+	private void checkMoreThan1(int quantity) {
+		if (quantity <= 1) {
+			throw new IllegalArgumentException(ERROR_MSG);
+		}
+	}
 }
