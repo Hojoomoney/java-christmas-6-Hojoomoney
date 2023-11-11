@@ -91,7 +91,7 @@ public class CheckValidate {
 	}
 	//메뉴의 개수가 1 이상인지 확인하는 메소드
 	private void checkMoreThan1(int quantity) {
-		if (quantity <= 1) {
+		if (quantity < 1) {
 			throw new IllegalArgumentException(ERROR_MSG);
 		}
 	}
