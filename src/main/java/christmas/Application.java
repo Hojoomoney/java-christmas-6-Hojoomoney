@@ -22,7 +22,7 @@ public class Application {
     	int dayOfWeekNumber = findDayOfWeek(day);
     	int dayOfWeekSaleAmount = checkDayOfWeekSale(dayOfWeekNumber, validMenu);
     	int specialDaySaleAmount = checkSpecialDaySale(dayOfWeekNumber, day);
-    	int totalSaleAmount = calculateTotalSaleAmount(christmasDaySaleAmount, dayOfWeekSaleAmount, specialDaySaleAmount, giveawayAmount);
+    	int totalSaleAmount = calculateTotalSaleAmount(christmasDaySaleAmount, dayOfWeekSaleAmount, specialDaySaleAmount, giveawayAmount,totalBeforeDiscount);
     	outputView.printAllBenefits(christmasDaySaleAmount, dayOfWeekSaleAmount, dayOfWeekNumber, specialDaySaleAmount, giveawayAmount, totalSaleAmount);
     	outputView.printTotalSaleAmount(totalSaleAmount);
     	int totalAfterDiscount = calculateTotalPriceAfterDiscount(totalBeforeDiscount, christmasDaySaleAmount, dayOfWeekSaleAmount, specialDaySaleAmount);
@@ -107,8 +107,13 @@ public class Application {
     private static int calculateTotalSaleAmount(int christmasDaySaleAmount, 
 												int dayOfWeekSaleAmount,
 												int specialDaySaleAmount, 
-												int giveawayAmount) {
-    	int totalSaleAmount = christmasDaySaleAmount 
+												int giveawayAmount,
+												int totalBeforeDiscount) {
+    	int totalSaleAmount = 0;
+    	if(totalBeforeDiscount < 10000) {
+    		return totalSaleAmount;
+    	}
+    	totalSaleAmount = christmasDaySaleAmount 
     						+ dayOfWeekSaleAmount
     						+ specialDaySaleAmount
     						+ giveawayAmount;
@@ -119,6 +124,9 @@ public class Application {
     													int christmasDaySaleAmount, 
 														int dayOfWeekSaleAmount,
 														int specialDaySaleAmount) {
+    	if(totalBeforeDiscount < 10000) {
+    		return totalBeforeDiscount;
+    	}
     	int totalAfterDiscount = totalBeforeDiscount 
     							+ christmasDaySaleAmount 
     							+ dayOfWeekSaleAmount 
