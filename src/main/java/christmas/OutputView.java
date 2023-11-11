@@ -32,4 +32,17 @@ public class OutputView {
 		System.out.println(df.format(total));
 		return total;
 	}
+	//증정 메뉴 출력 기능
+	public boolean printGiveaway(int total) {
+		System.out.println();
+		System.out.println("<증정 메뉴>");
+		boolean giveaway = false;
+		if(total >= 120000) {
+			giveaway = true;
+			System.out.println("샴페인 1개");
+			return giveaway;
+		}
+		System.out.println("없음");
+		return giveaway;
+	}
 }
