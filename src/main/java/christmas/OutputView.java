@@ -45,4 +45,50 @@ public class OutputView {
 		System.out.println("없음");
 		return giveaway;
 	}
+	//혜택 내역 출력 기능
+	public void printAllBenefits(int christmasDaySaleAmount, 
+								int dayOfWeekSaleAmount,
+								int dayOfWeekNumber,
+								int specialDaySaleAmount, 
+								int giveawayAmount,
+								int totalSaleAmount) {
+		System.out.println();
+		System.out.println("<혜택 내역>");
+		if (totalSaleAmount != 0) {
+			printChristmanDaySaleAmount(christmasDaySaleAmount);
+			printDayOfWeekSaleAmount(dayOfWeekSaleAmount, dayOfWeekNumber);
+			printSpecialDaySaleAmount(specialDaySaleAmount);
+			printGiveawayAmount(giveawayAmount);
+		}
+		if (totalSaleAmount == 0) {
+			System.out.println("없음");
+		}
+	}
+	private void printChristmanDaySaleAmount(int christmasDaySaleAmount) {
+		if(christmasDaySaleAmount != 0) {
+			System.out.println("크리스마스 디데이 할인: " + df.format(christmasDaySaleAmount));
+		}
+	}
+	private void printDayOfWeekSaleAmount(int dayOfWeekSaleAmount, int dayOfWeekNumber) {
+		if(dayOfWeekSaleAmount != 0) {
+			//주말일때
+			if(dayOfWeekNumber == 5 || dayOfWeekNumber == 6) {
+				System.out.println("주말 할인: " + df.format(dayOfWeekSaleAmount));
+			}
+			//평일일때
+			if (!(dayOfWeekNumber == 5 || dayOfWeekNumber == 6)) {
+				System.out.println("평일 할인: " + df.format(dayOfWeekSaleAmount));
+			}
+		}
+	}
+	private void printSpecialDaySaleAmount(int specialDaySaleAmount) {
+		if(specialDaySaleAmount != 0) {
+			System.out.println("특별 할인: " + df.format(specialDaySaleAmount));
+		}
+	}
+	private void printGiveawayAmount(int giveawayAmount) {
+		if(giveawayAmount == -25000) {
+			System.out.println("증정 이벤트: " + df.format(giveawayAmount));
+		}
+	}
 }
