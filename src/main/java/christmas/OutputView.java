@@ -22,22 +22,17 @@ public class OutputView {
 		}
 	}
 	//할인 전 총주문 금액 출력
-	public int printTotalPriceBeforeDiscount(Map<Menu, Integer> menu) {
-		int total = 0;
-		for (Map.Entry<Menu, Integer> entry : menu.entrySet()) {
-			total += entry.getKey().getPrice() * entry.getValue();
-		}
+	public void printTotalPriceBeforeDiscount(int totalBeforeDiscount) {
 		System.out.println();
 		System.out.println("<할인 전 총주문 금액>");
-		System.out.println(df.format(total));
-		return total;
+		System.out.println(df.format(totalBeforeDiscount));
 	}
 	//증정 메뉴 출력 기능
-	public boolean printGiveaway(int total) {
+	public boolean printGiveaway(int totalBeforeDiscount) {
 		System.out.println();
 		System.out.println("<증정 메뉴>");
 		boolean giveaway = false;
-		if(total >= 120000) {
+		if(totalBeforeDiscount >= 120000) {
 			giveaway = true;
 			System.out.println("샴페인 1개");
 			return giveaway;
@@ -96,5 +91,11 @@ public class OutputView {
 		System.out.println();
 		System.out.println("<총혜택 금액>");
 		System.out.println(df.format(totalSaleAmount));
+	}
+	//할인 후 예상 결제 금액 출력 메소드
+	public void printTotalAfterDiscount(int totalAfterDiscount) {
+		System.out.println();
+		System.out.println("<할인 후 예상 결제 금액>");
+		System.out.println(df.format(totalAfterDiscount));
 	}
 }
