@@ -91,4 +91,10 @@ public class OutputView {
 			System.out.println("증정 이벤트: " + df.format(giveawayAmount));
 		}
 	}
+	//총혜택 금액 출력 메소드
+	public void printTotalSaleAmount(int totalSaleAmount) {
+		System.out.println();
+		System.out.println("<총혜택 금액>");
+		System.out.println(df.format(totalSaleAmount));
+	}
 }
