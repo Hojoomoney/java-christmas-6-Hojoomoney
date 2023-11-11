@@ -1,8 +1,7 @@
 package christmas;
 
+import java.time.*;
 import java.util.*;
-
-import org.junit.jupiter.params.shadow.com.univocity.parsers.conversions.EnumSelector;
 
 public class Application {
     public static void main(String[] args) {
@@ -10,14 +9,14 @@ public class Application {
     	OutputView outputView = new OutputView();
     	CheckValidate checkValid = new CheckValidate();
     	outputView.printIntro();
-    	int date = checkValid.checkValidDate();
+    	int day = checkValid.checkValidDate();
     	Map<Menu, Integer> validMenu = new LinkedHashMap<>();
     	validMenu = checkValid.checkValidMenu();
-    	outputView.printDate(date);
+    	outputView.printDate(day);
     	outputView.printMenu(validMenu);
     	int total = outputView.printTotalPriceBeforeDiscount(validMenu);
     	boolean giveaway = outputView.printGiveaway(total);
-    	int christmasDaySaleAmount = checkChristmasDaySale(date);
+    	int christmasDaySaleAmount = checkChristmasDaySale(day);
     	
     }
     
@@ -29,5 +28,12 @@ public class Application {
     		return saleAmount;
     	}
     	return saleAmount;
+    }
+    //특정 날짜의 요일 구하기
+    private static int findDayOfWeek(int day) {
+    	LocalDate date = LocalDate.of(2023, 12, day);
+    	DayOfWeek dayOfWeek = date.getDayOfWeek();
+    	int dayOfWeekNumber = dayOfWeek.getValue();
+    	return dayOfWeekNumber;
     }
 }
