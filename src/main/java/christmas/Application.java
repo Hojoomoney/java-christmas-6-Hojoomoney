@@ -14,8 +14,9 @@ public class Application {
     	validMenu = checkValid.checkValidMenu();
     	outputView.printDate(day);
     	outputView.printMenu(validMenu);
-    	int total = outputView.printTotalPriceBeforeDiscount(validMenu);
-    	boolean giveaway = outputView.printGiveaway(total);
+    	int totalBeforeDiscount = calculateTotalPriceBeforeDiscount(validMenu);
+    	outputView.printTotalPriceBeforeDiscount(totalBeforeDiscount);
+    	boolean giveaway = outputView.printGiveaway(totalBeforeDiscount);
     	int giveawayAmount = calculateGiveawayAmount(giveaway);
     	int christmasDaySaleAmount = checkChristmasDaySale(day);
     	int dayOfWeekNumber = findDayOfWeek(day);
@@ -23,9 +24,18 @@ public class Application {
     	int specialDaySaleAmount = checkSpecialDaySale(dayOfWeekNumber, day);
     	int totalSaleAmount = calculateTotalSaleAmount(christmasDaySaleAmount, dayOfWeekSaleAmount, specialDaySaleAmount, giveawayAmount);
     	outputView.printAllBenefits(christmasDaySaleAmount, dayOfWeekSaleAmount, dayOfWeekNumber, specialDaySaleAmount, giveawayAmount, totalSaleAmount);
-    	
+    	outputView.printTotalSaleAmount(totalSaleAmount);
+    	int totalAfterDiscount = calculateTotalPriceAfterDiscount(totalBeforeDiscount, christmasDaySaleAmount, dayOfWeekSaleAmount, specialDaySaleAmount);
+    	outputView.printTotalAfterDiscount(totalAfterDiscount);
     }
-    
+    //할인 전 총주문 금액 계산 메소드
+    private static int calculateTotalPriceBeforeDiscount(Map<Menu, Integer> menu) {
+		int total = 0;
+		for (Map.Entry<Menu, Integer> entry : menu.entrySet()) {
+			total += entry.getKey().getPrice() * entry.getValue();
+		}
+		return total;
+	}
     //크리스마스 디데이 할인 확인 메소드
     private static int checkChristmasDaySale(int day) {
     	int christmasDaySaleAmount = 0;
@@ -101,5 +111,16 @@ public class Application {
     						+ specialDaySaleAmount
     						+ giveawayAmount;
     	return totalSaleAmount;
+    }
+    //할인 후 예상 결제 금액 계산 메소드
+    private static int calculateTotalPriceAfterDiscount(int totalBeforeDiscount,
+    													int christmasDaySaleAmount, 
+														int dayOfWeekSaleAmount,
+														int specialDaySaleAmount) {
+    	int totalAfterDiscount = totalBeforeDiscount 
+    							+ christmasDaySaleAmount 
+    							+ dayOfWeekSaleAmount 
+    							+ specialDaySaleAmount;
+    	return totalAfterDiscount;
     }
 }
