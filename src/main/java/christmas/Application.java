@@ -19,7 +19,7 @@ public class Application {
     	int christmasDaySaleAmount = checkChristmasDaySale(day);
     	int dayOfWeekNumber = findDayOfWeek(day);
     	int dayOfWeekSaleAmount = checkDayOfWeekSale(dayOfWeekNumber, validMenu);
-    	
+    	int specialDaySaleAmount = checkSpecialDaySale(dayOfWeekNumber, day);
     }
     
     //크리스마스 디데이 할인 확인 메소드
@@ -70,5 +70,13 @@ public class Application {
 			}
 		}
     	return dayOfWeekSaleAmount;
+    }
+    //특별 할인 확인 메소드
+    private static int checkSpecialDaySale(int dayOfWeekNumber, int day) {
+    	int specialDaySaleAmount = 0;
+    	if(dayOfWeekNumber == 7 || day == 25) {
+    		specialDaySaleAmount -= 1000;
+    	}
+    	return specialDaySaleAmount;
     }
 }
