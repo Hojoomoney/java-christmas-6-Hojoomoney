@@ -16,10 +16,14 @@ public class Application {
     	outputView.printMenu(validMenu);
     	int total = outputView.printTotalPriceBeforeDiscount(validMenu);
     	boolean giveaway = outputView.printGiveaway(total);
+    	int giveawayAmount = calculateGiveawayAmount(giveaway);
     	int christmasDaySaleAmount = checkChristmasDaySale(day);
     	int dayOfWeekNumber = findDayOfWeek(day);
     	int dayOfWeekSaleAmount = checkDayOfWeekSale(dayOfWeekNumber, validMenu);
     	int specialDaySaleAmount = checkSpecialDaySale(dayOfWeekNumber, day);
+    	int totalSaleAmount = calculateTotalSaleAmount(christmasDaySaleAmount, dayOfWeekSaleAmount, specialDaySaleAmount, giveawayAmount);
+    	outputView.printAllBenefits(christmasDaySaleAmount, dayOfWeekSaleAmount, dayOfWeekNumber, specialDaySaleAmount, giveawayAmount, totalSaleAmount);
+    	
     }
     
     //크리스마스 디데이 할인 확인 메소드
@@ -78,5 +82,24 @@ public class Application {
     		specialDaySaleAmount -= 1000;
     	}
     	return specialDaySaleAmount;
+    }
+    //증정 이벤트 계산 메소드
+    private static int calculateGiveawayAmount(boolean giveaway) {
+    	int giveawayAmount = 0;
+    	if(giveaway) {
+    		giveawayAmount = -25000;
+    	}
+    	return giveawayAmount;
+    }
+    //총혜택 금액 계산 메소드
+    private static int calculateTotalSaleAmount(int christmasDaySaleAmount, 
+												int dayOfWeekSaleAmount,
+												int specialDaySaleAmount, 
+												int giveawayAmount) {
+    	int totalSaleAmount = christmasDaySaleAmount 
+    						+ dayOfWeekSaleAmount
+    						+ specialDaySaleAmount
+    						+ giveawayAmount;
+    	return totalSaleAmount;
     }
 }
