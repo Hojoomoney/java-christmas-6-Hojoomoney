@@ -1,6 +1,5 @@
 package christmas;
 
-import java.util.*;
 
 import camp.nextstep.edu.missionutils.Console;
 

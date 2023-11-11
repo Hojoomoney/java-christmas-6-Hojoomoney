@@ -3,7 +3,7 @@ package christmas;
 import java.util.*;
 
 public class CheckValidate {
-	private static final String ERROR_MSG = "[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요";
+	private static final String ERROR_MSG = "[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.";
 	InputView inputView = new InputView();
 	Map<Menu, Integer> validMenu = new LinkedHashMap<>();
 	public int checkValidDate() {
@@ -13,7 +13,7 @@ public class CheckValidate {
     			date = inputView.readDate();
     			break;
     		} catch(NumberFormatException e) {
-    			System.out.println("[ERROR] 숫자를 입력해 주세요.");
+    			System.out.println("[ERROR] 유효하지 않은 날짜입니다. 다시 입력해 주세요.");
     		} catch(IllegalArgumentException e) {
     			System.out.println(e.getMessage());
     		} 
@@ -27,6 +27,12 @@ public class CheckValidate {
     		Map<String, String> menuItems = convertToMap(menu);
     		Map<String, Integer> menuParseInt = checkValidQuantity(menuItems);
     		validMenu = checkValidNameFromMenu(menuParseInt);
+    		try {
+				checkLessThan20(validMenu);
+			} catch (IllegalArgumentException e) {
+				System.out.println(e.getMessage());
+				validMenu.clear();
+			}
     		validOrder = validMenu.size() == menu.length;
     	}
     	return validMenu;
@@ -92,6 +98,16 @@ public class CheckValidate {
 	//메뉴의 개수가 1 이상인지 확인하는 메소드
 	private void checkMoreThan1(int quantity) {
 		if (quantity < 1) {
+			throw new IllegalArgumentException(ERROR_MSG);
+		}
+	}
+	//메뉴의 총 개수가 20개 이하인지 확인하는 메소드
+	private void checkLessThan20(Map<Menu, Integer> validMenu) {
+		int totalQuantity = 0; 
+		for (Map.Entry<Menu, Integer> entry : validMenu.entrySet()) {
+			totalQuantity += entry.getValue();
+		}
+		if(totalQuantity > 20) {
 			throw new IllegalArgumentException(ERROR_MSG);
 		}
 	}
