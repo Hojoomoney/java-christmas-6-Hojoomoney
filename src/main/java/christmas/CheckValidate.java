@@ -24,11 +24,12 @@ public class CheckValidate {
 		boolean	validOrder = false;
     	while (!validOrder) {
     		String[] menu = inputView.readMenu();
-    		Map<String, String> menuItems = convertToMap(menu);
-    		Map<String, Integer> menuParseInt = checkValidQuantity(menuItems);
-    		validMenu = checkValidNameFromMenu(menuParseInt);
     		try {
+    			Map<String, String> menuItems = convertToMap(menu);
+        		Map<String, Integer> menuParseInt = checkValidQuantity(menuItems);
+        		validMenu = checkValidNameFromMenu(menuParseInt);
 				checkLessThan20(validMenu);
+				checkHasOnlyBeverage(validMenu);
 			} catch (IllegalArgumentException e) {
 				System.out.println(e.getMessage());
 				validMenu.clear();
@@ -44,9 +45,7 @@ public class CheckValidate {
 				Menu menu = Menu.getMenuByKoreanName(entry.getKey());
 				validMenu.put(menu, entry.getValue());
 			} catch(IllegalArgumentException e) {
-				System.out.println(e.getMessage());
-				validMenu.clear();
-				break;
+				throw new IllegalArgumentException(ERROR_MSG);
 			}
 		}
 		return validMenu;
@@ -60,14 +59,8 @@ public class CheckValidate {
 				checkMoreThan1(quantity);
 				menuParseInt.put(entry.getKey(), quantity);
 			} catch(NumberFormatException e) {
-				System.out.println(ERROR_MSG);
-				menuParseInt.clear();
-				break;
-			} catch(IllegalArgumentException e) {
-				System.out.println(e.getMessage());
-				menuParseInt.clear();
-				break;
-			}
+				throw new IllegalArgumentException(ERROR_MSG);
+			} 
 		}
 		return menuParseInt;
 	}
@@ -78,13 +71,7 @@ public class CheckValidate {
 			String[] parts = menuItem.split("-");
 			String menuName = parts[0].trim();
 			String quantity = parts[1].trim();
-			try {
-				checkDuplicateMenu(menuItems, menuName);
-			} catch (IllegalArgumentException e) {
-				System.out.println(e.getMessage());
-				menuItems.clear();
-				break;
-			}
+			checkDuplicateMenu(menuItems, menuName);
 			menuItems.put(menuName, quantity);
 		}
 		return menuItems;
@@ -108,6 +95,19 @@ public class CheckValidate {
 			totalQuantity += entry.getValue();
 		}
 		if(totalQuantity > 20) {
+			throw new IllegalArgumentException(ERROR_MSG);
+		}
+	}
+	//주문한 메뉴가 음료만 있는지 확인하는 메소드
+	private void checkHasOnlyBeverage(Map<Menu, Integer> validMenu) {
+		boolean hasOnlyBeverage = true;
+		for (Map.Entry<Menu, Integer> entry : validMenu.entrySet()) {
+			if(!entry.getKey().getTypeMenu().equals("beverage")) {
+				hasOnlyBeverage = false;
+				break;
+			}
+		}
+		if(hasOnlyBeverage) {
 			throw new IllegalArgumentException(ERROR_MSG);
 		}
 	}
