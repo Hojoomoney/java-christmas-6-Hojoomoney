@@ -40,6 +40,20 @@ public class OutputView {
 		System.out.println("없음");
 		return giveaway;
 	}
+	//혜택 내역, 총혜택 금액, 할인 후 예상 결제 금액, 이벤트 배지 출력 기능
+	public void printAllResults(int christmasDaySaleAmount, 
+								int dayOfWeekSaleAmount,
+								int dayOfWeekNumber,
+								int specialDaySaleAmount, 
+								int giveawayAmount,
+								int totalSaleAmount,
+								int totalAfterDiscount,
+								String eventBadge) {
+		printAllBenefits(christmasDaySaleAmount,dayOfWeekSaleAmount,dayOfWeekNumber,specialDaySaleAmount, giveawayAmount,totalSaleAmount);
+		printTotalSaleAmount(totalSaleAmount);
+		printTotalAfterDiscount(totalAfterDiscount);
+		printEventBadge(eventBadge);
+	}
 	//혜택 내역 출력 기능
 	public void printAllBenefits(int christmasDaySaleAmount, 
 								int dayOfWeekSaleAmount,
@@ -104,4 +118,5 @@ public class OutputView {
 		System.out.println("<12월 이벤트 배지>");
 		System.out.println(eventBadge);
 	}
+	
 }
