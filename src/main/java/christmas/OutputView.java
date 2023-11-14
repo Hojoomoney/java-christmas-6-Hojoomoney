@@ -55,7 +55,7 @@ public class OutputView {
 		printEventBadge(eventBadge);
 	}
 	//혜택 내역 출력 기능
-	public void printAllBenefits(int christmasDaySaleAmount, 
+	private void printAllBenefits(int christmasDaySaleAmount, 
 								int dayOfWeekSaleAmount,
 								int dayOfWeekNumber,
 								int specialDaySaleAmount, 
@@ -101,19 +101,19 @@ public class OutputView {
 		}
 	}
 	//총혜택 금액 출력 메소드
-	public void printTotalSaleAmount(int totalSaleAmount) {
+	private void printTotalSaleAmount(int totalSaleAmount) {
 		System.out.println();
 		System.out.println("<총혜택 금액>");
 		System.out.println(df.format(totalSaleAmount));
 	}
 	//할인 후 예상 결제 금액 출력 메소드
-	public void printTotalAfterDiscount(int totalAfterDiscount) {
+	private void printTotalAfterDiscount(int totalAfterDiscount) {
 		System.out.println();
 		System.out.println("<할인 후 예상 결제 금액>");
 		System.out.println(df.format(totalAfterDiscount));
 	}
 	//이벤트 배지 출력 기능
-	public void printEventBadge(String eventBadge) {
+	private void printEventBadge(String eventBadge) {
 		System.out.println();
 		System.out.println("<12월 이벤트 배지>");
 		System.out.println(eventBadge);
