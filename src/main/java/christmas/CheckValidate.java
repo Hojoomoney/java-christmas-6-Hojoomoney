@@ -33,6 +33,8 @@ public class CheckValidate {
 			} catch (IllegalArgumentException e) {
 				System.out.println(e.getMessage());
 				validMenu.clear();
+			} catch (ArrayIndexOutOfBoundsException e) {
+				System.out.println(ERROR_MSG);
 			}
     		validOrder = validMenu.size() == menu.length;
     	}
